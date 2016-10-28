@@ -28,6 +28,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 		
 		mySearchBar.delegate = self
+	
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
 		
 	}
 
@@ -44,6 +48,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			self.view.layoutIfNeeded()
 		}) 
 		
+	}
+	
+	func adjustForKeyboard(notification: Notification) {
+		let userInfo = notification.userInfo!
+		
+		let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+		let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+		
+		if notification.name == Notification.Name.UIKeyboardWillHide {
+			myTableView.contentInset = UIEdgeInsets.zero
+		} else {
+			myTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+		}
+		
+		myTableView.scrollIndicatorInsets = myTableView.contentInset
+		
+//		let selectedRange = myTableView.selectedRange
+//		myTableView.scrollRangeToVisible(selectedRange)
 	}
 	
 	// MARK: - Search Bar delegate
