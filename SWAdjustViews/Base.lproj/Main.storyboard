@@ -23,35 +23,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swiftOrange" translatesAutoresizingMaskIntoConstraints="NO" id="opo-6F-5zV">
-                                <rect key="frame" x="0.0" y="20" width="414" height="248"/>
+                                <rect key="frame" x="36" y="36" width="342" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="248" id="KJh-zs-1uR"/>
+                                    <constraint firstAttribute="height" constant="160" id="KJh-zs-1uR"/>
                                 </constraints>
                             </imageView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="kRA-A1-90I">
-                                <rect key="frame" x="0.0" y="268" width="414" height="44"/>
+                                <rect key="frame" x="36" y="212" width="342" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="nzV-jC-53E"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oUQ-E9-3SM">
-                                <rect key="frame" x="0.0" y="312" width="414" height="416"/>
+                                <rect key="frame" x="36" y="272" width="342" height="456"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.47023705430000001" green="0.81287370469999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="kRA-A1-90I" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="1ve-hb-qKu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="opo-6F-5zV" secondAttribute="trailing" constant="-20" id="8Tg-ne-e7V"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="kRA-A1-90I" secondAttribute="trailing" constant="-20" id="TmM-l9-s7X"/>
-                            <constraint firstItem="oUQ-E9-3SM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="VWy-7b-DXf"/>
+                            <constraint firstItem="kRA-A1-90I" firstAttribute="width" secondItem="opo-6F-5zV" secondAttribute="width" id="7Fx-VF-Qja"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="opo-6F-5zV" secondAttribute="trailing" constant="16" id="8Tg-ne-e7V"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oUQ-E9-3SM" secondAttribute="bottom" constant="8" id="YrT-Xh-VJT"/>
-                            <constraint firstItem="opo-6F-5zV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dbo-wD-dPt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="oUQ-E9-3SM" secondAttribute="trailing" constant="-20" id="g8g-iD-gfy"/>
-                            <constraint firstItem="oUQ-E9-3SM" firstAttribute="top" secondItem="kRA-A1-90I" secondAttribute="bottom" id="gJK-O0-Skm"/>
-                            <constraint firstItem="opo-6F-5zV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="hfT-bL-qXb"/>
-                            <constraint firstItem="kRA-A1-90I" firstAttribute="top" secondItem="opo-6F-5zV" secondAttribute="bottom" id="yPm-q9-UjN"/>
+                            <constraint firstItem="opo-6F-5zV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="dbo-wD-dPt"/>
+                            <constraint firstItem="oUQ-E9-3SM" firstAttribute="top" secondItem="kRA-A1-90I" secondAttribute="bottom" constant="16" id="gJK-O0-Skm"/>
+                            <constraint firstItem="opo-6F-5zV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="hfT-bL-qXb"/>
+                            <constraint firstItem="oUQ-E9-3SM" firstAttribute="centerX" secondItem="kRA-A1-90I" secondAttribute="centerX" id="jYA-pc-USg"/>
+                            <constraint firstItem="oUQ-E9-3SM" firstAttribute="width" secondItem="kRA-A1-90I" secondAttribute="width" id="mgA-Ot-F6R"/>
+                            <constraint firstItem="kRA-A1-90I" firstAttribute="centerX" secondItem="opo-6F-5zV" secondAttribute="centerX" id="vFx-id-0GP"/>
+                            <constraint firstItem="kRA-A1-90I" firstAttribute="top" secondItem="opo-6F-5zV" secondAttribute="bottom" constant="16" id="yPm-q9-UjN"/>
                         </constraints>
                     </view>
                     <connections>
@@ -59,11 +59,12 @@
                         <outlet property="myImageViewTop" destination="hfT-bL-qXb" id="Xuh-55-20L"/>
                         <outlet property="mySearchBar" destination="kRA-A1-90I" id="Cdj-q4-jXu"/>
                         <outlet property="myTableView" destination="oUQ-E9-3SM" id="JfT-LV-VtB"/>
+                        <outlet property="myTableViewBottom" destination="YrT-Xh-VJT" id="sL8-b7-mXe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="607" y="542"/>
+            <point key="canvasLocation" x="1051" y="527"/>
         </scene>
     </scenes>
     <resources>

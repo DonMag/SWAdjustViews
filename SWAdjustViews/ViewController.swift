@@ -17,6 +17,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	@IBOutlet weak var mySearchBar: UISearchBar!
 	
 	@IBOutlet weak var myImageViewTop: NSLayoutConstraint!
+	@IBOutlet weak var myTableViewBottom: NSLayoutConstraint!
+	
+	var origImageTop: CGFloat = 0
+	var origTableViewBottom: CGFloat = 0
+	
+	var animationDuration: TimeInterval = 0
+	var animationCurve: UIViewAnimationCurve = UIViewAnimationCurve.easeIn
+	var animatingRotation: Bool = false
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -33,6 +41,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
 		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
 		
+		myTableViewBottom.constant = 8
+		
+		origImageTop = myImageViewTop.constant
+		origTableViewBottom = myTableViewBottom.constant
+		
+		self.view.backgroundColor = UIColor.black
+		
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -42,13 +57,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 	func animateViewChange(_ newTop: CGFloat) -> Void {
 		
-		self.myImageViewTop.constant = newTop
-		
 		UIView.animate(withDuration: 0.5, animations: {
+			self.myImageViewTop.constant = newTop
 			self.view.layoutIfNeeded()
-		}) 
+		})
 		
 	}
+	
+	// https://gist.github.com/smnh/e864896ba37bc4cfdce6
 	
 	func adjustForKeyboard(notification: Notification) {
 		let userInfo = notification.userInfo!
@@ -56,28 +72,60 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 		let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 		
+		var t = (keyboardViewEndFrame.height + 8)
+		
+		
+		
+		
 		if notification.name == Notification.Name.UIKeyboardWillHide {
-			myTableView.contentInset = UIEdgeInsets.zero
+//			myTableView.contentInset = UIEdgeInsets.zero
+
+			t = origTableViewBottom
+			
 		} else {
-			myTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+//			myTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+			
+			// nothing to do
+		
 		}
+
+		self.myTableViewBottom.constant = t
 		
-		myTableView.scrollIndicatorInsets = myTableView.contentInset
+//		myTableView.scrollIndicatorInsets = myTableView.contentInset
+
+	}
+
+	func keyboardWillChangeFrame(notification: Notification) -> Void {
+		self.adjustForKeyboard(notification: notification)
+	}
+	
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		
-//		let selectedRange = myTableView.selectedRange
-//		myTableView.scrollRangeToVisible(selectedRange)
+		super.viewWillTransition(to: size, with: coordinator)
+		
+		coordinator.animate(alongsideTransition: { context in
+			self.animationDuration = context.transitionDuration
+			self.animationCurve = context.completionCurve
+			self.animatingRotation = true
+		},
+		                    completion: { context in
+								self.animatingRotation = false
+		}
+		)
+		
+		print("trans... ", size)
 	}
 	
 	// MARK: - Search Bar delegate
 	
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		self.animateViewChange(-(self.myImageView.frame.size.height))
+		self.animateViewChange(origImageTop - self.myImageView.frame.size.height)
 		searchBar.showsCancelButton = true
 	}
 	
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		searchBar.showsCancelButton = false
-		self.animateViewChange(0)
+		self.animateViewChange(origImageTop)
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
